@@ -1,8 +1,8 @@
 import  connection  from "./../database/database";
 
-const getIngresos = (req, res) =>{
+const getGastos = (req, res) =>{
     connection.query(
-        'SELECT * FROM ingresos;',
+        'SELECT * FROM gastos;',
         (err, result) => {
             if (err) {
                 console.log("fallo: ", err)
@@ -13,20 +13,19 @@ const getIngresos = (req, res) =>{
     );
 };
 
-const addIngresos = (req, res) =>{
+const addGastos = (req, res) =>{
     
     const body = req.body;
     console.log(body);
 
     connection.query(
-        "INSERT INTO ingresos (id, nombre, valor, fuente, descripcion, usuario_id) VALUES (?, ?, ?, ?, ?, ?);",
+        "INSERT INTO gastos (id, nombre, valor, categoria, descripcion, usuario_id) VALUES (?, ?, ?, ?, ?, ?);",
 
         [
             body.id,
-            //body.fecha,
             body.nombre,
             body.valor,
-            body.fuente,
+            body.categoria,
             body.descripcion,
             body.usuario_id,
         ],
@@ -35,69 +34,69 @@ const addIngresos = (req, res) =>{
             if (err) {
                 console.log("fallo: ", err)
             }
-            console.log("Ingreso agregado: ", result)
+            console.log("Gasto agregado: ", result)
             res.json({result})
         }
     );
 };
 
-const getIngreso = (req, res) =>{
+const getGasto = (req, res) =>{
     
     const id = req.params.id;
 
     connection.query(
-        'SELECT * FROM ingresos WHERE id = ?;', [id] ,
+        'SELECT * FROM gastos WHERE id = ?;', [id] ,
         (err, result) => {
             if (err) {
                 console.log("fallo: ", err)
             }
-            console.log("Ingreso Encontrado: ", result[0])
-            res.json({ ingreso: result[0] });
+            console.log("Gasto Encontrado: ", result[0])
+            res.json({ Gasto: result[0] });
         }
     );
 };
 
-const updateIngreso = (req, res) =>{
+const updateGasto = (req, res) =>{
     
     const id = req.params.id;
     const body = req.body;
 
     connection.query(
-        'UPDATE ingresos SET nombre=?, fuente=?, descripcion=? WHERE id = ?;', [
+        'UPDATE gastos SET nombre=?, categoria=?, descripcion=? WHERE id = ?;', [
             body.nombre,
-            body.fuente,
+            body.categoria,
             body.descripcion,
             id],
         (err, result) => {
             if (err) {
                 console.log("fallo: ", err)
             }
-            console.log("Ingreso Modificado: ", result[0])
+            console.log("Gasto Modificado: ", result[0])
             res.json({ ingreso: result[0] });
         }
     );
 };
 
-const deleteIngreso = (req, res) =>{
+const deleteGasto = (req, res) =>{
     
     const id = req.params.id;
 
     connection.query(
-        'DELETE FROM ingresos WHERE id = ?;', [id] ,
+        'DELETE FROM gastos WHERE id = ?;', [id] ,
         (err, result) => {
             if (err) {
                 console.log("fallo: ", err)
             }
-            console.log("Ingreso Eliminado: ", result[0])
-            res.json({ ingreso: result[0] });
+            console.log("Gasto Eliminado: ", result[0])
+            res.json({ gasto: result[0] });
         }
     );
 };
 
 export const methods = {
-    getIngresos,
-    addIngresos,
-    getIngreso,
-    updateIngreso,
-    deleteIngreso
+    getGastos,
+    addGastos,
+    getGasto,
+    updateGasto,
+    deleteGasto
 };

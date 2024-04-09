@@ -61,7 +61,25 @@ const getUsuario = (req, res) =>{
 };
 
 const updateUsuario = (req, res) =>{
+    
+    const num_documento = req.params.id;
+    const body = req.body;
 
+    connection.query(
+        'UPDATE usuarios SET telefono=?, email=?, contrasena=?, pais=? WHERE num_documento = ?;', [
+            body.telefono,
+            body.email,
+            body.contrasena,
+            body.pais,
+            num_documento],
+        (err, result) => {
+            if (err) {
+                console.log("fallo: ", err)
+            }
+            console.log("Usuario Modificado: ", result[0])
+            res.json({ usuario: result[0] });
+        }
+    );
 };
 
 const deleteUsuario = (req, res) =>{
