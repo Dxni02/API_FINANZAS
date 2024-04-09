@@ -23,7 +23,6 @@ const addIngresos = (req, res) =>{
 
         [
             body.id,
-            //body.fecha,
             body.nombre,
             body.valor,
             body.fuente,
