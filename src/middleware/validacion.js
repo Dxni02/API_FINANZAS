@@ -11,7 +11,7 @@ const validacionToken = (req, res, next)=>{
         next();
     } catch (error) {
         res.json({
-            message: "Fallo"
+            message: "Fail Validation"
         })
     }
 };
