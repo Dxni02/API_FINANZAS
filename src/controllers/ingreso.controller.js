@@ -2,7 +2,7 @@ import  connection  from "./../database/database";
 
 const getIngresos = (req, res) =>{
     connection.query(
-        'SELECT * FROM ingresos;',
+        'SELECT * FROM ingresos WHERE usuario_id=?;',[req.usuario.num_documento],
         (err, result) => {
             if (err) {
                 console.log("fallo: ", err)
@@ -27,7 +27,7 @@ const addIngresos = (req, res) =>{
             body.valor,
             body.fuente,
             body.descripcion,
-            body.usuario_id,
+            req.usuario.num_documento,
         ],
 
         (err, result) => {
@@ -42,16 +42,16 @@ const addIngresos = (req, res) =>{
 
 const getIngreso = (req, res) =>{
     
-    const id = req.params.id;
+    const nombre = req.params.nombre;
 
     connection.query(
-        'SELECT * FROM ingresos WHERE id = ?;', [id] ,
+        'SELECT * FROM ingresos WHERE usuario_id=? AND (nombre = ? OR descripcion=?);', [req.usuario.num_documento, nombre, nombre] ,
         (err, result) => {
             if (err) {
                 console.log("fallo: ", err)
             }
-            console.log("Ingreso Encontrado: ", result[0])
-            res.json({ ingreso: result[0] });
+            console.log("Ingreso Encontrado: ", result)
+            res.json({ ingreso: result });
         }
     );
 };

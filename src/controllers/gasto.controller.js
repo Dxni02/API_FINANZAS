@@ -2,7 +2,7 @@ import  connection  from "./../database/database";
 
 const getGastos = (req, res) =>{
     connection.query(
-        'SELECT * FROM gastos;',
+        'SELECT * FROM gastos WHERE usuario_id=?;',[req.usuario.num_documento],
         (err, result) => {
             if (err) {
                 console.log("fallo: ", err)
@@ -27,7 +27,7 @@ const addGastos = (req, res) =>{
             body.valor,
             body.categoria,
             body.descripcion,
-            body.usuario_id,
+            req.usuario.num_documento,
         ],
 
         (err, result) => {
@@ -42,10 +42,10 @@ const addGastos = (req, res) =>{
 
 const getGasto = (req, res) =>{
     
-    const id = req.params.id;
+    const nombre = req.params.nombre;
 
     connection.query(
-        'SELECT * FROM gastos WHERE id = ?;', [id] ,
+        'SELECT * FROM gastos WHERE usuario_id=? AND (nombre=? OR descripcion=?);', [req.usuario.num_documento, nombre, nombre] ,
         (err, result) => {
             if (err) {
                 console.log("fallo: ", err)

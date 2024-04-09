@@ -1,4 +1,6 @@
 import  connection  from "./../database/database";
+import  JWT  from "jsonwebtoken";
+import config from "../config";
 
 const getUsuarios = (req, res) =>{
     connection.query(
@@ -11,6 +13,22 @@ const getUsuarios = (req, res) =>{
             res.json({result})
         }
     );
+};
+
+const crearToken = (req, res)=>{
+    const {num_documento, contrasena}= req.body;
+    connection.query(
+        "SELECT * FROM usuarios WHERE num_documento= ? AND contrasena=?", [num_documento, contrasena],
+        (err, result) => {
+            if (err) {
+                console.log("fallo: ", err)
+            }
+            console.log("Usuario Registrado: ", result)
+            const token= JWT.sign(result[0], config.secret_key)
+            res.json({token})
+        }
+    )
+    
 };
 
 const addUsuarios = (req, res) =>{
@@ -100,6 +118,7 @@ const deleteUsuario = (req, res) =>{
 
 export const methods = {
     getUsuarios,
+    crearToken,
     addUsuarios,
     getUsuario,
     updateUsuario,
