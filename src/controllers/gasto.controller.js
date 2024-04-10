@@ -22,7 +22,6 @@ const addGastos = (req, res) =>{
         "INSERT INTO gastos (id, nombre, valor, categoria, descripcion, usuario_id) VALUES (?, ?, ?, ?, ?, ?);",
 
         [
-            body.id,
             body.nombre,
             body.valor,
             body.categoria,
@@ -71,7 +70,7 @@ const updateGasto = (req, res) =>{
             if (err) {
                 console.log("fallo: ", err)
             }
-            console.log("Gasto Modificado: ", result[0])
+            console.log("Gasto Modificado", result[0])
             res.json({ ingreso: result[0] });
         }
     );

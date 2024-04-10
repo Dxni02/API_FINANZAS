@@ -23,7 +23,7 @@ const crearToken = (req, res)=>{
             if (err) {
                 console.log("fallo: ", err)
             }
-            console.log("Usuario Registrado: ", result)
+            console.log("Inicio de sesion Satisfactorio: ", result)
             const token= JWT.sign(result[0], config.secret_key)
             res.json({token})
         }

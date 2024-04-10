@@ -22,7 +22,6 @@ const addIngresos = (req, res) =>{
         "INSERT INTO ingresos (id, nombre, valor, fuente, descripcion, usuario_id) VALUES (?, ?, ?, ?, ?, ?);",
 
         [
-            body.id,
             body.nombre,
             body.valor,
             body.fuente,
