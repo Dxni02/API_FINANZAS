@@ -21,7 +21,8 @@ const addGastos = (req, res) =>{
     connection.query(
         "INSERT INTO gastos (id, nombre, valor, categoria, descripcion, usuario_id) VALUES (?, ?, ?, ?, ?, ?);",
 
-        [
+        [   
+            body.id,
             body.nombre,
             body.valor,
             body.categoria,
